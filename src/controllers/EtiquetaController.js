@@ -37,7 +37,7 @@ class EtiquetaController {
 
     static excluirEtiqueta = (req, res) => {
         const id = req.params.id;
-        etiquetas.findById(id, (erro) => {
+        etiquetas.findByIdAndDelete(id, (erro) => {
             if(!erro) {
                 res.status(200).send({message: 'Etiqueta excluída com sucesso!'});
             }else {

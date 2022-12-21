@@ -1,4 +1,7 @@
+import { json } from "express";
+import etiquetas from "../models/Etiqueta.js";
 import palavras from "../models/Palavra.js";
+
 
 class PalavraController {
 
@@ -24,6 +27,8 @@ class PalavraController {
         })
     }
 
+    
+
     static buscarPalavraPorID = (req, res) => {
         const id = req.params.id;
         palavras.findById(id, (erro, palavras) => {
@@ -37,7 +42,7 @@ class PalavraController {
 
     static excluirPalavra = (req, res) => {
         const id = req.params.id;
-        palavras.findById(id, (erro) => {
+        palavras.findByIdAndDelete(id, (erro) => {
             if(!erro) {
                 res.status(200).send({message: 'Palavra excluída com sucesso!'});
             }else {
@@ -55,6 +60,14 @@ class PalavraController {
                 res.status(500).send({message: erro.message});
             }
         })
+    }
+//PAREI AQUI
+    static adicionarEtiquetaAUmaPalavra = (req, res) => {
+        const id = req.params.id;
+        let palavra = palavras.findById(id);
+        let etiquetas = palavra.etiquetas;
+        let novaEtiqueta = req.body.etiquetas;
+        etiquetas.push(novaEtiqueta);
     }
 
 }
